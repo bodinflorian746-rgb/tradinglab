@@ -541,4 +541,7 @@
   /* énoncé long (plus de 150 caractères) : graphique à 70 % de la largeur, énoncé en 14 px */
   .tsx-v2 .v2-onescreen--long .v2-chart--question { height: clamp(240px, 70vw, 300px); }
   .tsx-v2 .v2-onescreen--long .v2-lead { font-size: 14px; }
+  /* énoncé moyen (3 lignes) : graphique un peu moins haut (78 % de la largeur), pour que les choix tiennent dans
+     l'écran sans tasser les étiquettes contre les bougies (à 70 %, elles se rangent en colonne et serrent les bougies) */
+  .tsx-v2 .v2-onescreen--mid .v2-chart--question { height: clamp(240px, 78vw, 320px); }
 }

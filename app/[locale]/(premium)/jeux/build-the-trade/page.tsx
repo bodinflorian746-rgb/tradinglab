@@ -520,8 +520,8 @@ export default function BuildTheTradePage() {
         </div>
 
         {/* Scénario */}
-        {/* énoncé de plus de 95 caractères (3 lignes et plus en 390, légende du profil comprise) : graphique compact, pour que les choix tiennent dans l'écran 390 × 844 */}
-        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${current.context.length > 95 ? " v2-onescreen--long" : ""}`} aria-labelledby="btt-title">
+        {/* énoncé de plus de 95 caractères : graphique un peu moins haut (78 % de la largeur), pour que les choix tiennent dans l'écran 390 × 844 ; jamais le format compact (70 %), où les étiquettes des entrées se rangent en colonne et serrent les bougies */}
+        <section className={`v2-card v2-pad v2-gap v2-onescreen flex flex-col${current.context.length > 95 ? " v2-onescreen--mid" : ""}`} aria-labelledby="btt-title">
           <h2 id="btt-title" className="v2-display v2-h2 mx-auto w-full max-w-3xl font-bold">{T.buildTitle}</h2>
 
           <div className="v2-gap-s v2-onescreen-body mx-auto flex w-full max-w-3xl flex-col">
