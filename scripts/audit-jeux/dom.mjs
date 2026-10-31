@@ -149,8 +149,8 @@ const measureLabels = (page, { mobile, buttons, ps }) => page.evaluate(({ mobile
     const a = labels[i].r, b = labels[j].r;
     if (a.left < b.right - 0.5 && b.left < a.right - 0.5 && a.top < b.bottom - 0.5 && b.top < a.bottom - 0.5) errs.push(`« ${labels[i].txt} » chevauche « ${labels[j].txt} »`);
   }
-  // Étiquette de zone à côté de sa zone, sans ambiguïté : son bord à au plus une hauteur d'étiquette
-  // de la zone, et, si elle ne la touche pas, aucune autre zone plus proche d'elle que la sienne
+  // Étiquette de zone contre sa zone (demande du PO : « Résistance » posée à 32 px, au-dessus d'une zone
+  // voisine) : son bord à au plus 4 px de la zone, sinon aucune autre zone plus proche d'elle que la sienne
   const zoneRect = (i) => { const z = svg.querySelector(`[data-zone="${i}"]`); return z && [...z.querySelectorAll("rect")].map((e) => e.getBoundingClientRect()).filter((r) => r.width > 0).sort((p, q) => q.width - p.width)[0]; };
   const allZones = [...svg.querySelectorAll("[data-zone]")].map((z) => z.getAttribute("data-zone"));
   const gapTo = (cy, r) => (cy < r.top ? r.top - cy : cy > r.bottom ? cy - r.bottom : 0);
@@ -158,7 +158,7 @@ const measureLabels = (page, { mobile, buttons, ps }) => page.evaluate(({ mobile
     const zr = zoneRect(t.key.slice(4));
     if (!zr) continue;
     const cy = (t.r.top + t.r.bottom) / 2, own = gapTo(cy, zr);
-    if (own > t.r.height * 1.5) errs.push(`étiquette « ${t.txt} » loin de sa zone (${Math.round(own)} px)`);
+    if (own > t.r.height / 2 + 4) errs.push(`étiquette « ${t.txt} » loin de sa zone (${Math.round(own - t.r.height / 2)} px de son bord, pas contre elle)`);
     // (une étiquette qui touche sa zone, bord à 4 px près, n'est jamais ambiguë, même posée sur une zone voisine)
     const other = own > t.r.height / 2 + 4 && allZones.filter((i) => i !== t.key.slice(4)).map((i) => zoneRect(i)).filter(Boolean).find((r) => gapTo(cy, r) + 0.5 < own);
     if (other) errs.push(`étiquette « ${t.txt} » plus près d'une autre zone que de la sienne`);
@@ -407,6 +407,8 @@ const HARD = [
   ["find-the-mistake", "Débutant", 11038], ["find-the-mistake", "Intermédiaire", 11038], ["find-the-mistake", "Avancé", 11038],
   // Build the Trade : choix hors de l'écran 390 × 844 (869 px), énoncé de 194 caractères (adv_btt_sweep_loin, 2026-10-30)
   ["build-the-trade", "Avancé", 11017],
+  // étiquette « Résistance » écartée de sa zone par « Faux breakouts » (fakeout_zone_wide, rejeu du PO, 2026-10-31)
+  ["place-stop", "Avancé", 60127],
 ];
 async function hardRounds(browser) {
   const ctx = await browser.newContext({ viewport: { width: 390, height: MOBILE_H }, deviceScaleFactor: 2, isMobile: true, hasTouch: true, locale: "fr", storageState: STORAGE_STATE });
@@ -483,6 +485,14 @@ const MUTATIONS = {
     const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
     const g = svg.querySelector('[data-label-for^="zone"]'), r = g.querySelector("rect").getBoundingClientRect(), s = svg.getBoundingClientRect();
     g.setAttribute("transform", `translate(0 ${r.top - s.top > s.height / 2 ? -110 : 110})`);
+  }],
+  // (cas du PO : étiquette à 14 px de sa zone, sous le seuil « loin » d'avant, 1,5 hauteur d'étiquette)
+  "étiquette de zone écartée de sa zone": [/pas contre elle/, () => {
+    const svg = document.querySelector(".tsx-v2 .v2-chart svg.v2-svg");
+    const g = svg.querySelector('[data-label-for^="zone"]'), r = g.querySelector("rect").getBoundingClientRect(), s = svg.getBoundingClientRect();
+    const z = [...svg.querySelectorAll(`[data-zone="${g.getAttribute("data-label-for").slice(4)}"] rect`)].map((e) => e.getBoundingClientRect()).sort((p, q) => q.width - p.width)[0];
+    const dy = z.top - s.top > r.height + 20 ? z.top - 14 - r.bottom : z.bottom + 14 - r.top;
+    g.setAttribute("transform", `translate(0 ${dy})`);
   }],
   "étiquette de ligne loin de sa ligne": [/loin de sa ligne/, () => {
     // une ligne ajoutée 40 px sous une étiquette qui porte sa clé

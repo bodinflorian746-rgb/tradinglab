@@ -803,7 +803,7 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
       // qui éloignerait une pastille de sa ligne est refusée : ces pastilles se rangent alors
       // côte à côte, à la première place libre le long de leur ligne.
       const packed = packLines(ls, H);
-      for (const s of placeOrder) {
+      const layout = (order: typeof placeOrder) => { for (const s of order) {
         const w = inlineTagW(s.label);
         const y0 = clamp(packed.get(s.key) ?? toY(s.price), INLINE_TAG_H / 2 + 1, H - INLINE_TAG_H / 2 - 1);
         let y = y0;
@@ -822,7 +822,8 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
         // niveau voisin (« Liquidité balayée » au-dessus du « Plus bas précédent »)
         if (x === null && s.key.startsWith("zone")) {
           const z = zones[+s.key.slice(4)];
-          const reach = INLINE_TAG_H / 2 + ZONE_TOUCH, zt = toY(Math.max(z.y1, z.y2)) - reach, zb = toY(Math.min(z.y1, z.y2)) + reach;
+          // (bords de la zone dessinée, hauteur minimale comprise : l'audit mesure le contact sur ce dessin)
+          const reach = INLINE_TAG_H / 2 + ZONE_TOUCH, zr = zoneRect(z), zt = zr.y - reach, zb = zr.y + zr.h + reach;
           // puis, faute de place contre la zone, la place libre la plus proche d'elle (jamais à l'autre
           // bout du graphique, à côté d'un autre niveau : « Swing high 1 » près du Swing high 3)
           const far = 6 * (INLINE_TAG_H + INLINE_TAG_GAP), gap = (yy: number) => (yy < zt ? zt - yy : yy > zb ? yy - zb : 0);
@@ -830,8 +831,8 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
           for (let yy = zt - far; yy <= zb + far; yy += 2) cands.push(yy);
           // jamais plus près d'une autre zone étiquetée que de la sienne : plus loin, mais sans
           // ambiguïté (« Swing low 1 » posé au niveau du Swing low 2 inversait l'ordre lu)
-          const others = zoneLabelIdx.filter((j) => j !== +s.key.slice(4)).map((j) => [toY(Math.max(zones[j].y1, zones[j].y2)), toY(Math.min(zones[j].y1, zones[j].y2))]);
-          const own = [toY(Math.max(z.y1, z.y2)), toY(Math.min(z.y1, z.y2))];
+          const others = zoneLabelIdx.filter((j) => j !== +s.key.slice(4)).map((j) => { const r = zoneRect(zones[j]); return [r.y, r.y + r.h]; });
+          const own = [zr.y, zr.y + zr.h];
           const dist = (yy: number, [t, b]: number[]) => (yy < t ? t - yy : yy > b ? yy - b : 0);
           const amb = (yy: number) => others.some((o) => dist(yy, o) < dist(yy, own));
           // ordre : contre la zone (jamais ambigu, même posée sur une zone voisine) ; puis tout près
@@ -847,10 +848,22 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
           // par elle), pour lui faire la place ; sinon « Swing high 1 » passait sous « Entrée »
           const squeeze = (yy: number) => {
             const xx = lineX1 - w;
-            const blocks = inlineTags.filter((t) => Math.abs(t.y - yy) < INLINE_TAG_H + PACK_GAP - EPS && xx < t.x + t.w + INLINE_TAG_GAP - EPS && xx + w + INLINE_TAG_GAP > t.x + EPS);
+            const hit = (a: { x: number; y: number; w: number }, o: { x: number; y: number; w: number }) => Math.abs(o.y - a.y) < INLINE_TAG_H + PACK_GAP - EPS && a.x < o.x + o.w + INLINE_TAG_GAP - EPS && a.x + a.w + INLINE_TAG_GAP > o.x + EPS;
+            const blocks = inlineTags.filter((t) => hit({ x: xx, y: yy, w }, t));
             if (!blocks.length || blocks.some((t) => t.lineY === undefined)) return null;
-            const moved = blocks.map((t) => ({ t, y: t.y < yy ? yy - INLINE_TAG_H - PACK_GAP : yy + INLINE_TAG_H + PACK_GAP }));
-            const rest = inlineTags.filter((t) => !blocks.includes(t));
+            // En cascade : une pastille écartée pousse à son tour celles qu'elle touche, du même côté
+            // (pile Confirmation / Agressive / Pullback profond au-dessus de « Résistance → support »)
+            const moved: { t: InlineTag; y: number }[] = [];
+            for (const dir of [-1, 1]) {
+              const placed: { x: number; y: number; w: number }[] = [{ x: xx, y: yy, w }];
+              for (const t of inlineTags.filter((o) => (dir < 0 ? o.y <= yy : o.y > yy)).sort((p, q) => dir * (p.y - q.y))) {
+                let ny = t.y;
+                for (const q of placed) if (hit({ x: t.x, y: ny, w: t.w }, q)) ny = dir < 0 ? Math.min(ny, q.y - INLINE_TAG_H - PACK_GAP) : Math.max(ny, q.y + INLINE_TAG_H + PACK_GAP);
+                if (ny !== t.y) { if (t.lineY === undefined) return null; moved.push({ t, y: ny }); }
+                placed.push({ x: t.x, y: ny, w: t.w });
+              }
+            }
+            const rest = inlineTags.filter((t) => !moved.some((m) => m.t === t));
             const clear = (bx: number, by: number, bw: number, others: { x: number; y: number; w: number }[]) => inFrame(by)
               && !others.some((o) => Math.abs(o.y - by) < INLINE_TAG_H + PACK_GAP - EPS && bx < o.x + o.w + INLINE_TAG_GAP - EPS && bx + bw + INLINE_TAG_GAP > o.x + EPS)
               && ![...candleBoxes, ...uiBoxes].some((c) => bx < c.x2 && bx + bw > c.x1 && by - INLINE_TAG_H / 2 < c.y2 && by + INLINE_TAG_H / 2 > c.y1);
@@ -892,7 +905,29 @@ export function GameChartV2({ data, overlay, mode: modeProp, pin, mark, verdictB
         const mz = s.key === "markTag" && mark?.kind === "zone" && zones[mark.index] ? zoneRect(zones[mark.index]) : null;
         const anchorY = mz && (y + INLINE_TAG_H / 2 < mz.y || y - INLINE_TAG_H / 2 > mz.y + mz.h) ? (y < mz.y ? mz.y : mz.y + mz.h) : undefined;
         inlineTags.push({ key: s.key, label: s.label, color: s.color, y, w, x: x ?? Math.max(minX, lineX1 - w), dim: dimmed(s.key), hit: !!s.hit, lineY: onLine(s.key) ? toY(s.price) : undefined, anchorY });
+      } };
+      // Étiquettes de zone contre leur zone : la pose est gloutonne, et une étiquette posée d'abord
+      // peut prendre la seule place qui touche aussi une zone voisine (« Faux breakouts » posée
+      // contre « Résistance », qui partait à 32 px). On essaie alors les autres ordres des zones
+      // et on garde celui où le moins d'étiquettes s'écartent de leur zone.
+      const zoneSpecs = placeOrder.filter((s) => s.key.startsWith("zone"));
+      const offZone = () => inlineTags.filter((t) => t.key.startsWith("zone")).map((t) => {
+        const z = zones[+t.key.slice(4)], reach = INLINE_TAG_H / 2 + ZONE_TOUCH;
+        const zr = zoneRect(z), zt = zr.y - reach, zb = zr.y + zr.h + reach;
+        return t.y < zt ? zt - t.y : t.y > zb ? t.y - zb : 0;
+      });
+      const perms = (a: typeof zoneSpecs): (typeof zoneSpecs)[] => (a.length <= 1 ? [a] : a.flatMap((s, i) => perms([...a.slice(0, i), ...a.slice(i + 1)]).map((q) => [s, ...q])));
+      const orders = zoneSpecs.length > 1 && zoneSpecs.length <= 4 ? perms(zoneSpecs).map((zs) => { let k = 0; return placeOrder.map((s) => (s.key.startsWith("zone") ? zs[k++] : s)); }) : [placeOrder];
+      let best: { tags: InlineTag[]; off: number; gap: number } | null = null;
+      for (const order of orders) {
+        inlineTags.length = 0;
+        layout(order);
+        const g = offZone(), off = g.filter((d) => d > 0).length, gap = g.reduce((a, b) => a + b, 0);
+        if (!best || off < best.off || (off === best.off && gap < best.gap - 0.5)) best = { tags: [...inlineTags], off, gap };
+        if (off === 0) break;
       }
+      inlineTags.length = 0;
+      if (best) inlineTags.push(...best.tags);
     }
     const inlineTag = (t: InlineTag) => (
       <g key={t.key} data-label-for={t.key} className={t.key === "markTag" ? markClass : undefined} opacity={t.dim ? 0.35 : 1}>
