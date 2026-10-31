@@ -121,21 +121,23 @@ const lvnCandles = () => withVol(buildCandles(27205, LVN_STEPS, { seed: 10301, d
 // ─── VWAP — plan sur le NASDAQ (M15, depuis l'ouverture de la séance) ───────
 // Creux 27 000, sommet 27 140, creux 27 080, sommet 27 140 (résistance), cassure, sommet 27 230,
 // correction vers l'ancienne résistance 27 140, où se trouve le VWAP de séance ; creux local 27 133,
-// sommet local de la correction 27 153, cassure : entrée 27 155, SL 27 125, TP 27 215 (sous le sommet).
+// sommet local de la correction 27 153 ; marteau sur le creux, puis grande bougie verte qui casse le sommet local :
+// entrée 27 155, SL 27 125, TP 27 215 (sous le sommet).
 export const VWN_STEPS: Step[] = [
-  ...c(27008), { c: 27004, l: 27000 }, ...c(27031, 27058, 27089, 27112), { c: 27134, h: 27140 },          // creux 27 000, sommet 27 140 (indice 6)
+  ...c(27008), { c: 27004, l: 27000 }, { c: 27031, l: 27003 }, ...c(27058, 27089, 27112), { c: 27134, h: 27140 },          // creux 27 000, sommet 27 140 (indice 6)
   ...c(27118, 27101), { c: 27086, l: 27080 }, ...c(27102, 27121), { c: 27133, h: 27139 },                 // creux 27 080 (9), 2e touche (12)
   ...c(27158, 27179, 27201, 27217), { c: 27224, h: 27230 },                                               // cassure, sommet 27 230 (17)
   { c: 27205, h: 27226 }, ...c(27182, 27160), { c: 27148, l: 27142 }, { c: 27151, h: 27153 }, { c: 27144, h: 27151 }, // correction, sommet local (22)
-  { c: 27140, l: 27133 },                                                                                 // creux local (24)
-  ...c(27149), { c: 27158, h: 27160 },                                                                    // cassure : entrée 27 155 (26)
+  { c: 27147, h: 27149, l: 27133 },                                                                       // creux local, marteau (24)
+  { c: 27151, h: 27153, l: 27146 },                                                                       // reprise sous le sommet local (25)
+  { c: 27176, h: 27179, l: 27149 },                                                                       // cassure : entrée 27 155 (26)
 ];
 export const VWN_V = [
   9800, 4600, 4000, 6300, 6200, 7700, 8900,
   7200, 5800, 5600, 4600, 5300, 8000,
   10000, 8900, 9400, 12000, 11900,
-  12000, 12000, 5700, 4000, 6200, 7000, 5600,
-  6500, 7900,
+  12000, 12000, 5700, 4000, 6200, 7000, 7400,
+  6200, 9800,
 ];
 
 const vwapNas = () => withVol(buildCandles(27020, VWN_STEPS, { seed: 10401, decimals: 0, asset: "NASDAQ", session: "New York", volatility: "normale", levels: [27140], pins: pinAll(VWN_STEPS) }), VWN_V);
@@ -148,12 +150,12 @@ export const VWX_STEPS: Step[] = [
   ...c(3931, 3924, 3916), { c: 3905, l: 3900 }, ...c(3913), { c: 3918, h: 3921 }, ...c(3909), { c: 3903, l: 3899 }, ...c(3910, 3906),
   ...c(3893, 3884), { c: 3879, l: 3875 }, ...c(3886, 3883), { c: 3880, l: 3875 },                       // impulsion, support 3 875
   ...c(3888, 3895), { c: 3900, h: 3902 }, { c: 3899, h: 3901, l: 3898 },                                // retour sur 3 900 (18), creux local (19)
-  { c: 3893, h: 3900, l: 3891 },                                                                        // cassure du creux local : entrée 3 897 (20)
+  { c: 3886, h: 3900, l: 3884 },                                                                        // grande bougie rouge, cassure du creux local : entrée 3 897 (20)
 ];
 export const VWX_V = [
   3200, 2900, 2800, 3000, 2600, 2500, 2700, 2900, 2400, 2300,
   4600, 6000, 3900, 3100, 2800, 3000,
-  2600, 2500, 2700, 2400, 3400,
+  2600, 2500, 2700, 2400, 4800,
 ];
 
 const vwapXau = () => withVol(buildCandles(3935, VWX_STEPS, { seed: 10501, decimals: 0, asset: "XAU/USD", session: "Londres", volatility: "normale", levels: [3900], pins: pinAll(VWX_STEPS) }), VWX_V);

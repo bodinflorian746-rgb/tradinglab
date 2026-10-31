@@ -160,7 +160,9 @@ export function WANasdaqPlanDiagram() {
       caption="Après l'UTAD et le SOW, vente à 27 205 sur la confirmation M15 du LPSY, stop à 27 245 au-dessus du sommet du LPSY (27 230), objectif à 27 125 au-dessus du support du range (27 100) : 40 points de risque pour 80 points de gain."
       panels={[{
         key: "h1", title: "NASDAQ H1 · plan de vente", decimals: 0, height: 290, candles: cs, slots: cs.length + 4,
-        zones: nqZones, levels: t.levels, markers: nqMarkers(cs).filter((m) => m.key !== "local"), chips: t.chips,
+        zones: nqZones, levels: t.levels, chips: t.chips,
+        // (confirmation nommée : l'entrée, à 25 points sous le LPSY, ne laisse pas la place à une bougie H1 plus grande)
+        markers: [...nqMarkers(cs).filter((m) => m.key !== "local"), { key: "conf", i: D.entry, price: cs[D.entry].c, label: "Engulfing baissier", short: "Engulfing", tone: "bear", side: "below", role: "close" }],
       }]}
     />
   );
