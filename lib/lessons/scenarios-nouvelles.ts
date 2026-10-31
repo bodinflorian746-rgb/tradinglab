@@ -72,12 +72,13 @@ const sellStopEu = () => build(1.0838, [
   ...c(1.0801, 1.0795),
 ], 11104, EU, [1.082]);
 
-// Stop Loss et Take Profit : résistance 1.0895 (deux rejets), support 1.0833 – 1.0838, entrée 1.0850.
+// Stop Loss et Take Profit : résistance 1.0895 (deux rejets), support 1.0833 – 1.0838, entrée 1.0850 après
+// la réaction sur le support : marteau vert planté dans la zone (13), bougie de reprise (14).
 const sltp = () => build(1.0872, [
   { c: 1.0881 }, { c: 1.0891, h: 1.0895 }, ...c(1.0878, 1.0869, 1.088), { c: 1.089, h: 1.0894 },
-  ...c(1.0876, 1.0862, 1.085), { c: 1.084, l: 1.0836 }, ...c(1.0849), { c: 1.0858, h: 1.0861 }, ...c(1.0847),
-  { c: 1.0838, l: 1.0833 },                                             // creux 1.0833 (13)
-  ...c(1.0844), { c: 1.085, l: 1.0843 },                                // entrée 1.0850 (15)
+  ...c(1.0876, 1.0862, 1.085), { c: 1.084, l: 1.0836 }, ...c(1.0849), { c: 1.0858, h: 1.0861 }, { c: 1.0842, l: 1.084 },
+  { c: 1.0847, h: 1.0849, l: 1.0833 },                                  // marteau, creux 1.0833 (13)
+  { c: 1.0853, h: 1.0855, l: 1.0845 }, { c: 1.085, h: 1.0856, l: 1.0846 }, // reprise (14), entrée 1.0850 (15)
 ], 11105, EU, [1.0895]);
 
 // Buy Limit complet : résistance H1 1.0905 (deux rejets), creux 1.0800, ancienne résistance 1.0850 touchée
@@ -232,7 +233,8 @@ const volDay = (k: "a" | "b") => () => {
     { c: 3926, r: 5 }, { c: 3931, r: 5 }, { c: 3936, r: 6 }, { c: 3937, r: 5, h: 3940 }, { c: 3933, r: 5 }, { c: 3929, r: 4 },
     { c: 3933, r: 5 }, { c: 3936, r: 5, h: 3939 }, { c: 3931, r: 5 }, { c: 3926, r: 6 }, { c: 3921, r: 5 }, { c: 3916, r: 5 },
     { c: 3911, r: 5 }, { c: 3906, r: 5 }, { c: 3902, r: 5, l: 3900 }, { c: 3907, r: 5 }, { c: 3912, r: 5 }, { c: 3915, r: 5 },
-    { c: 3910, r: 5 }, { c: 3906, r: 4, l: 3904 }, { c: 3909, r: 5 }, { c: 3910, r: 5 },          // entrée 3 910 $ (29)
+    // réaction : marteau dont le creux (3 904 $) reste au-dessus du support, petite reprise, entrée
+    { c: 3910, r: 5 }, { c: 3909, r: 6, l: 3904 }, { c: 3912, r: 5 }, { c: 3910, r: 5 },          // entrée 3 910 $ (29)
   ] : [
     { c: 3910, r: 14 }, { c: 3903, r: 14, l: 3900 }, { c: 3914, r: 13 }, { c: 3922, r: 14 },
     { c: 3924, r: 14 }, { c: 3933, r: 14 }, { c: 3929, r: 15, h: 3940 }, { c: 3914, r: 14 }, { c: 3925, r: 14 },

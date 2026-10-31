@@ -223,6 +223,46 @@ function checkCharts({ ids, vocab, sr, chrome = true }) {
       const err = proof(v, v, l.dataset.to ? +l.dataset.to : n - 1);
       if (err) E(`${name} : ${err}`);
     }
+    // Entrée sans réaction (règle PO, 2026-10-30, comme dans les jeux) : une entrée tracée (ligne « entry ») suit un
+    // signal visible sur ses 5 dernières bougies (rejet, engulfing, sommet ou creux local dépassé, clôture revenue au-delà
+    // d'un niveau), tenu ensuite ; bougie d'entrée prise
+    // au début de la ligne, à une bougie près. Exceptions : exemples d'erreur voulus et ordres limite d'une stratégie.
+    {
+      const NO_SIGNAL_OK = { BiasDiagram: "exemple de FOMO voulu", OBExecutionPlanDiagram: "ordre limite sur l'Order Block (stratégie SMC)" };
+      const enL = svg.querySelector('line[data-level="entry"]'), slL = svg.querySelector('line[data-level="sl"]');
+      const chartId = svg.closest("[data-lesson-chart]")?.dataset.lessonChart ?? "";
+      if (enL && !(chartId in NO_SIGNAL_OK) && n >= 6) {
+        const price = +enL.dataset.price, up = slL ? +slL.dataset.price < price : cs[n - 1].c >= price;
+        const ks = up ? cs : cs.map((k) => ({ o: -k.o, h: -k.l, l: -k.h, c: -k.c }));
+        const levelsAt = [...svg.querySelectorAll("rect[data-zone]")].map((z) => [+z.dataset.y1, +z.dataset.y2])
+          .concat([...svg.querySelectorAll("line[data-level]")].filter((l) => !/^(entry|sl|tp)$/.test(l.dataset.level)).map((l) => [+l.dataset.price, +l.dataset.price]))
+          .map(([a, b]) => (up ? [Math.min(a, b), Math.max(a, b)] : [-Math.max(a, b), -Math.min(a, b)]));
+        const bodyOf = (k) => Math.abs(k.c - k.o);
+        const signalAt = (seq, j) => {
+          const k = seq[j], pv = seq[j - 1], r = k.h - k.l, lw = Math.min(k.o, k.c) - k.l;
+          if (r > 0 && lw >= Math.max(bodyOf(k), 0.35 * r) && Math.min(k.o, k.c) >= k.l + 0.5 * r) return true;
+          if (k.c > k.o && pv.c < pv.o && k.c >= pv.o && k.o <= pv.c && bodyOf(k) >= bodyOf(pv)) return true;
+          if (k.c > k.o && k.c > Math.max(...seq.slice(Math.max(0, j - 3), j).map((x) => x.h))) return true;
+          return levelsAt.some(([lo, hi]) => Math.min(k.l, pv.l) < lo && k.c > hi && k.c > k.o);
+        };
+        const visible = (end) => {
+          const seq = ks.slice(0, end + 1), m = seq.length;
+          for (let j = m - 1; j >= Math.max(4, m - 5); j--) {
+            if (!signalAt(seq, j)) continue;
+            const k = seq[j];
+            if (seq.slice(j + 1).every((x) => x.c > k.l) && seq[m - 1].c >= Math.min(k.o, k.c)) return true;
+          }
+          return false;
+        };
+        const at = Math.min(n - 1, Math.round(+(enL.dataset.from ?? n - 1)));
+        // signal nommé sur le schéma (« Cassure du creux local »…) : la bougie marquée clôture au-delà de l'extrême de la précédente
+        const named = [...svg.querySelectorAll("[data-marker]")].some((mk) => {
+          const i = +mk.dataset.i, lab = mk.querySelector("text")?.textContent ?? "";
+          return /cass|rejet|engulfing|confirm|reprise/i.test(lab) && i >= at - 1 && i <= at + 1 && i >= 1 && i < n && ks[i].c > ks[i - 1].h;
+        });
+        if (!named && ![at - 1, at, at + 1].some((e) => e >= 5 && e < n && visible(e))) E(`entrée ${fmt(price)} prise sans réaction ni confirmation visible (bougie ${at}) : rejet, engulfing ou cassure locale attendus juste avant`);
+      }
+    }
     // Objectif (règle PO, audit de fond) : jamais posé sur un support, une résistance ou une borne de range tracés,
     // ni au-delà : il se place avant le niveau (à moins de 0,1 bougie médiane du niveau = posé dessus)
     {
@@ -849,7 +889,7 @@ const EXPECT = {
   "Fibonacci sans repères 0 % et 100 %": /sans ses repères 0 % et 100 %/, "tracé Fibonacci au bord": /le tracé ne part pas d'un vrai/,
   "POC déplacé": /POC recalculé/, "barre du profil étirée": /la plus longue barre|non proportionnelle/, "Value Area trop étroite": /contient .* % du volume/,
   "volume d'une bougie modifié": /recalculé|la bougie dit/, "VWAP décalé": /VWAP recalculé/, "VWAP ancré hors du graphique": /ancré hors du graphique/,
-  "ATR faux": /ATR 14 recalculé/, "CE décalé": /milieu de « /, "BPR débordant": /au lieu du chevauchement/, "objectif de figure faux": /reportée depuis la ligne de cou/, "TP posé sur la résistance": /posé sur ou au-delà de/,
+  "ATR faux": /ATR 14 recalculé/, "CE décalé": /milieu de « /, "BPR débordant": /au lieu du chevauchement/, "objectif de figure faux": /reportée depuis la ligne de cou/, "TP posé sur la résistance": /posé sur ou au-delà de/, "entrée sans réaction": /prise sans réaction ni confirmation/,
   "delta modifié": /la bougie dit|somme des deltas/, "CVD faux": /somme des deltas/, "LVN décalée": /n'est pas une LVN/, "divergence CVD inventée": /divergence nommée/, "divergence haussière inventée": /divergence haussière/,
 };
 // Défauts injectés (--autotest) : chacun doit produire au moins une erreur
@@ -859,6 +899,20 @@ const MUTATIONS = {
   "CE décalé": () => { const l = document.querySelector('line[data-role="ce"]'); l.dataset.price = String(+l.dataset.price + 0.0004); },
   "BPR débordant": () => { const z = document.querySelector('rect[data-role="bpr"]'); z.dataset.y2 = String(+z.dataset.y2 + 0.0005); },
   // TP posé pile sur le support ou la résistance suivants (Avancé 10 et 11 avant l'audit de fond)
+  "entrée sans réaction": () => {
+    for (const svg of document.querySelectorAll("svg[data-candles]")) {
+      const en = svg.querySelector('line[data-level="entry"]'), sl = svg.querySelector('line[data-level="sl"]');
+      if (!en || ["BiasDiagram", "OBExecutionPlanDiagram"].includes(svg.closest("[data-lesson-chart]")?.dataset.lessonChart)) continue;
+      const cs = JSON.parse(svg.dataset.candles), at = Math.min(cs.length - 1, Math.round(+(en.dataset.from ?? cs.length - 1)));
+      const rs = cs.map((k) => k.h - k.l).sort((a, b) => a - b), up = sl ? +sl.dataset.price < +en.dataset.price : true, step = rs[rs.length >> 1] * 0.35;
+      // les 6 bougies jusqu'à l'entrée (et la suivante) descendent vers elle sans mèche ni reprise
+      let p = cs[Math.max(0, at - 6)].o;
+      for (let i = Math.max(0, at - 6); i <= Math.min(cs.length - 1, at + 1); i++) { const c = p - (up ? 1 : -1) * step; cs[i] = { ...cs[i], o: p, c, h: Math.max(p, c), l: Math.min(p, c) }; p = c; }
+      svg.dataset.candles = JSON.stringify(cs);
+      return;
+    }
+    throw new Error("aucune entrée tracée sur cette page");
+  },
   "TP posé sur la résistance": () => {
     for (const svg of document.querySelectorAll("svg[data-candles]")) {
       const tp = svg.querySelector('line[data-level="tp"]'), en = svg.querySelector('line[data-level="entry"]');

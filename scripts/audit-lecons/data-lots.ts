@@ -433,11 +433,12 @@ export function checkLot19(check: Check) {
     check(p.filter((q) => q.name).every((q) => q.name === "HH" || q.name === "HL") && p.some((q) => q.name === "HL"), "Risk-off (MT 3) : structure HH / HL");
   }
   {
-    // Macro-trading 3 bloc 2 : 4 610 → 4 690 (HH), pullback 4 655 sur l'ancien sommet 4 655 (HL), long 4 660 / SL 4 640 / TP 4 730
+    // Macro-trading 3 bloc 2 : 4 610 → 4 690 (HH), pullback 4 655 sur l'ancien sommet 4 655 (HL, marteau qui clôture
+    // à 4 660 : la réaction), long 4 660 / SL 4 640 / TP 4 730
     const cs = CS["riskoff-trend-h4"], p = pivots(cs, 2);
     const hh = p.find((q) => q.name === "HH"), hl = p.find((q) => q.name === "HL" && hh && q.index > hh.index);
     check(hh?.price === 4690 && hl?.price === 4655 && p.some((q) => q.side === "h" && q.price === 4655), "Risk-off (MT 3) : HH 4 690, HL 4 655 = ancien sommet");
-    check(!!hl && cs.some((k, i) => i > hl.index && k.c === 4660) && Math.max(...cs.map((k) => k.h)) === 4730 && near(rrOf(4660, 4640, 4730), 3.5, 0.005), "Risk-off (MT 3) : entrée 4 660, TP 4 730");
+    check(!!hl && cs.some((k, i) => i >= hl.index && k.c === 4660) && Math.max(...cs.map((k) => k.h)) === 4730 && near(rrOf(4660, 4640, 4730), 3.5, 0.005), "Risk-off (MT 3) : entrée 4 660, TP 4 730");
   }
   {
     // Macro-trading 3 bloc 3 : sommets 4 735 / 4 720 / 4 705, corrections 25 / 40 / 65

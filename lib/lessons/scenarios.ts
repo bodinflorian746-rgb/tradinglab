@@ -897,13 +897,14 @@ const riskoffDaily = () => buildCandles(4590, [
   levels: [4585, 4705], pins: [4588, 4585, 4626, 4628, 4619, 4624, 4612, 4611, 4608, 4659, 4662, 4645, 4643, 4640, 4702, 4705] });
 // Macro-trading 3 — RiskoffTrend (XAU/USD H4) : impulsion 4 610 → 4 690 avec un palier à
 // 4 655 (sommet), pullback contrôlé jusqu'à 4 655 (ancien sommet devenu support, HL),
-// stabilisation, bougie de reprise (entrée 4 660), impulsion jusqu'à 4 730.
+// stabilisation en marteau (plus bas 4 655, clôture 4 660), bougie de reprise (entrée 4 660), impulsion
+// jusqu'à 4 730.
 const riskoffTrend = () => buildCandles(4600, [
   ...c(4605), { c: 4612, l: 4608 }, { c: 4624, l: 4610 }, { c: 4637, l: 4621 }, { c: 4648, l: 4634 }, { c: 4652, h: 4655 }, ...c(4647), { c: 4645, l: 4642 },
-  { c: 4657, l: 4644 }, ...c(4669, 4680), { c: 4685, h: 4690 }, { c: 4679, h: 4687 }, ...c(4667), { c: 4657, l: 4655 }, { c: 4660, h: 4662, l: 4656 },
+  { c: 4657, l: 4644 }, ...c(4669, 4680), { c: 4685, h: 4690 }, { c: 4679, h: 4687 }, { c: 4664, l: 4662 }, { c: 4660, h: 4665, l: 4655 },
   ...c(4675, 4690, 4704, 4718), { c: 4728, h: 4730 },
 ], { seed: 19201, decimals: 0, asset: "XAU/USD", session: "New York", volatility: "normale",
-  levels: [4655, 4690, 4730], pins: [4608, 4610, 4621, 4624, 4634, 4637, 4648, 4655, 4642, 4644, 4657, 4669, 4680, 4685, 4690, 4679, 4687, 4667, 4656, 4660, 4662, 4730] });
+  levels: [4655, 4690, 4730], pins: [4608, 4610, 4621, 4624, 4634, 4637, 4648, 4655, 4642, 4644, 4657, 4669, 4680, 4685, 4690, 4679, 4687, 4664, 4662, 4665, 4660, 4730] });
 // Macro-trading 3 — RiskoffExhaustion (XAU/USD H4) : forte tendance depuis 4 590 $, puis trois
 // sommets qui faiblissent (4 735, 4 720, 4 705 $) et des corrections de plus en plus profondes
 // (25, 40, 65 $ : creux 4 710, 4 680, 4 640). Chaque bougie est écrite (o = clôture précédente).

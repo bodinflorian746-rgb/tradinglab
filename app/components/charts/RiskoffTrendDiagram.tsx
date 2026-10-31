@@ -1,6 +1,6 @@
 // Macro-trading 3 bloc 2 — trader dans le sens du régime (XAU/USD H4), exemple et plan du
 // texte : impulsion 4 610 → 4 690 $ (HH) avec un palier à 4 655 $, pullback contrôlé
-// jusqu'à 4 655 $ (ancien sommet devenu support, HL), stabilisation, 1re bougie de reprise franche :
+// jusqu'à 4 655 $ (ancien sommet devenu support, HL), stabilisation en marteau, 1re bougie de reprise franche :
 // long 4 660 $, SL 4 640 $ (sous le pullback), TP 4 730 $ (continuation). Pivots et R/R
 // calculés. Bougies : scenarios.ts (« riskoff-trend-h4 »).
 
