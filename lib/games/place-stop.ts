@@ -3006,8 +3006,11 @@ export function buildPlaceStopChart(
     const sg = c.direction === "BUY" ? 1 : -1, good = c.stops.find((x) => x.type === "logical") ?? c.stops.find((x) => x.type === "wide");
     const rr = c.tp === null || !good ? 2 : Math.abs(c.tp - c.entry) / Math.abs(c.entry - good.price);
     return !!entrySignal(c.past, sg, c.zones) && levelsReadable(c.past, c.zones) && sg * (c.future[c.future.length - 1].c - c.entry) > 0 && (setup === "tight_consolidation" || rr >= 2.05)
-      && Object.values(claims).every((f) => f(c) === null);
+      && Object.values(claims).every((f) => f(c) === null)
+      // (scénarios d'origine : le stop large n'est jamais récompensé quand le bon stop est le médian, R/R ≤ 1,7)
+      && (built || c.tp === null || !c.stops.some((x) => x.type === "logical") || c.stops.filter((x) => x.type === "wide").every((w) => Math.abs(c.tp! - c.entry) / Math.abs(c.entry - w.price) <= 1.65));
   };
+  const built = !!PLACE_STOP_TEMPLATES.find((t) => t.id === setup)?.build;
   // (affirmations du scénario : un graphique ne contredit jamais son énoncé)
   const claims = PLACE_STOP_TEMPLATES.find((t) => t.id === setup)?.claims ?? {};
   for (let k = 1; k <= 80 && !ok(out); k++) out = buildPlaceStopChart1(setup, (seed + k * 0x6C8E9CF5) >>> 0, volatility, difficulty, ctx);
