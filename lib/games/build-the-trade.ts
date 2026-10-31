@@ -22,7 +22,7 @@ import { assetPriceMap, mapCandle, mapDomain, mapZone, priceEpsilon } from "./pr
 import type { NotionId } from "./notions";
 import { BTT_NEW, REACT, type BttRaw, type BttClaim } from "./btt-scenarios";
 import { levelsReadable } from "./level-proof";
-import { ensureVisibleSignal, entrySignal, reactionFloor, reactionKindOf } from "./confirmation";
+import { MIN_SIGNAL_SIZE, ensureVisibleSignal, entrySignal, findSignal, reactionFloor, reactionKindOf } from "./confirmation";
 
 export type { Asset, Session, Volatility, Spread, HtfBias, MacroContext, Candle, ChartZone };
 
@@ -1307,6 +1307,7 @@ function buildBuildTradeChart1(template: BuildTradeTemplate, seed: number, vol: 
  * de réaction, juste au-delà du niveau. Après la passe de réalisme, la bougie qui vient à l'entrée devient un
  * marteau (étoile filante à la vente) : mèche dans le niveau, sans toucher le stop du plan, clôture pile à
  * l'entrée, amplitude d'au moins 0,65 bougie médiane voisine (la bougie d'avant clôture plus haut s'il le faut).
+ * Un scénario sur deux (reactionKindOf, comme dans les autres jeux) : engulfing à la place du marteau.
  */
 function withReactionFill(ch: BuildTradeChart, t: BuildTradeTemplate, vol: Volatility): BuildTradeChart {
   if (t.optimal.entry !== "deep_pullback" || t.anticipated || ch.orderLevel === undefined) return ch;
@@ -1318,6 +1319,34 @@ function withReactionFill(ch: BuildTradeChart, t: BuildTradeTemplate, vol: Volat
   if (i < 0) return ch;
   const before = [...P, ...F.slice(0, i)].slice(-10).map((k) => k.h - k.l).sort((a, b) => a - b);
   const T = Math.max(before[before.length >> 1] ?? 0, 0.3 * VOL_MULT[vol]);
+  // Engulfing : la bougie qui vient au niveau clôture juste avant l'entrée, une bougie rouge plonge dans le
+  // niveau (sans toucher le stop), puis une grande bougie verte l'avale et clôture pile à l'entrée ; faute
+  // de place (stop trop près, futur trop court, reprise qui ne repart pas de l'entrée), marteau
+  if (reactionKindOf(t.id) === "engulfing" && i + 3 < F.length) {
+    const lowE = Math.max(keep + 0.12 * T, Math.min(F[i].l, F[i + 1].l, F[i + 2].l, L - 0.1 * T, E - 0.8 * T));
+    // (la bougie rouge clôture dans la zone du niveau, jamais au-delà : seule sa mèche y plonge, « FVG touché
+    // d'une mèche, jamais cassé en clôture »)
+    const zs = ch.zones.map((z) => (sg === 1 ? [Math.min(z.y1, z.y2), Math.max(z.y1, z.y2)] : [-Math.max(z.y1, z.y2), -Math.min(z.y1, z.y2)]));
+    const far = zs.filter(([lo, hi]) => lo <= L + 1e-9 && hi >= L - 0.2 * T).reduce((f, [lo]) => Math.max(f, lo), -Infinity);
+    const qc = E - 0.06 * T, rc = Math.max(lowE + 0.08 * T, far + 0.04 * T), n3 = F[i + 3];
+    // (bougie d'avant déjà au niveau : elle clôture un peu plus haut, la bougie qui vient au niveau descend)
+    let pc = i > 0 ? F[i - 1].c : P[P.length - 1].c;
+    const lift = pc <= qc + 0.1 * T && i > 0;
+    if (lift) pc = qc + 0.35 * T;
+    // (jamais d'effacement d'une mèche plus profonde du tracé : elle porte parfois l'énoncé, « touché d'une mèche »)
+    const deeper = Math.min(F[i].l, F[i + 1].l, F[i + 2].l) < lowE - 0.01 * T;
+    if (!deeper && E - rc >= 0.4 * T && pc > qc + 0.1 * T && n3.c > E + 0.03 * T && n3.l > lowE) {
+      const eg = [...F];
+      if (lift) eg[i - 1] = { ...F[i - 1], c: pc, h: Math.max(F[i - 1].h, pc) };
+      eg[i] = { o: pc, c: qc, h: pc + 0.03 * T, l: Math.max(lowE + 0.05 * T, qc - 0.05 * T) };
+      eg[i + 1] = { o: qc, c: rc, h: qc + 0.03 * T, l: lowE };
+      eg[i + 2] = { o: rc, c: E, h: E + 0.05 * T, l: rc - 0.03 * T };
+      eg[i + 3] = { o: E, c: n3.c, h: Math.max(n3.h, n3.c), l: Math.min(n3.l, E) };
+      // (engulfing gardé s'il se lit comme tel et à la taille de la règle « signal visible », sinon marteau)
+      const future = eg.map(fl), sig = findSignal([...ch.past, ...future.slice(0, i + 3)], sg, ch.zones);
+      if (sig?.kind === "engulfing" && sig.at === ch.past.length + i + 2 && sig.size >= MIN_SIGNAL_SIZE) return { ...ch, future };
+    }
+  }
   const out = [...F];
   const prevC = i > 0 ? out[i - 1].c : P[P.length - 1].c;
   // mèche : dans le niveau, jamais jusqu'au stop ; corps (ouverture - clôture) plus court que la mèche
