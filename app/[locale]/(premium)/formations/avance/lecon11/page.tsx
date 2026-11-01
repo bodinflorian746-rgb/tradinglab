@@ -152,7 +152,7 @@ export default function Page() {
       </div>
 
       <Retail>
-        La taille se calcule à part, avec la valeur du point du contrat de ton broker. Sur un CFD NASDAQ courant, le lot minimum (0,1 lot) vaut environ 0,10 $ par point, soit à peu près 0,09 € : ce stop de 30 points représente environ 3 € de risque, sous les 6 € autorisés par la règle des 2 % sur un compte de 300 €. Vérifie la taille minimale et la valeur du point de ton contrat avant de trader.
+        La taille se calcule à part, avec la valeur du point du contrat de ton broker. Selon le broker, le lot minimum sur un indice peut être de 0,1 ou de 0,01, et la valeur du point change aussi. Vérifie toujours les spécifications du contrat chez ton broker (sur MT5 : clic droit sur le symbole, puis Spécification). Sur un CFD NASDAQ courant, le lot minimum (0,1 lot) vaut environ 0,10 $ par point, soit à peu près 0,09 € : ce stop de 30 points représente environ 3 € de risque, sous les 6 € autorisés par la règle des 2 % sur un compte de 300 €. Vérifie la taille minimale et la valeur du point de ton contrat avant de trader.
       </Retail>
 
       <Section title="Exemple complémentaire : le VWAP sur l'or (XAU/USD)">

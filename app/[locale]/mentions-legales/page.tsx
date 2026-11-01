@@ -47,7 +47,6 @@ const CONTENT: Record<Locale, Content> = {
             ],
           },
           "Les données utilisateurs (comptes, progression) sont stockées via Supabase.",
-          "Les paiements sont traités par Stripe. TradeScaleX ne stocke aucune donnée bancaire.",
           "Les emails transactionnels sont envoyés via Resend.",
         ],
       },

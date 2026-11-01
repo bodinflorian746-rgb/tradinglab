@@ -68,6 +68,9 @@ export default function ContentFr() {
       </Block>
 
       <Block title="Calculer le risque">
+        <P>
+          Selon le broker, le lot minimum sur un indice peut être de 0,1 ou de 0,01, et la valeur du point change aussi. Vérifie toujours les spécifications du contrat chez ton broker (sur MT5 : clic droit sur le symbole, puis Spécification).
+        </P>
         <Example title="Vente NASDAQ, compte de 3 000 € à 1 %">
           <ul className="space-y-1">
             <li>- Budget de risque : 30 €</li>

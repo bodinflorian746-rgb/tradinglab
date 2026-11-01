@@ -57,6 +57,9 @@ export default function ContentFr() {
         <P>
           Capital de 2 000 €, risque de 1 % : ton budget de perte est de 20 €. Avec un stop de 32 points, ton exposition cible est de 20 ÷ 32 = 0,625 € par point.
         </P>
+        <P>
+          Selon le broker, le lot minimum sur un indice peut être de 0,1 ou de 0,01, et la valeur du point change aussi. Vérifie toujours les spécifications du contrat chez ton broker (sur MT5 : clic droit sur le symbole, puis Spécification).
+        </P>
         <Example title="Au lot près">
           <ul className="space-y-1">
             <li>- Sur un CFD NASDAQ courant, 1 lot vaut environ 1 $ par point, soit environ 0,92 €</li>
